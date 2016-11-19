@@ -6,6 +6,46 @@ import os
 
 app = Flask(__name__)
 
+
+# Wit api start
+
+def first_entity_value(entities, entity):
+    """
+    Returns first entity value
+    """
+    if entity not in entities:
+        return None
+    val = entities[entity][0]['value']
+    if not val:
+        return None
+    return val['value'] if isinstance(val, dict) else val
+
+#### This function would be the entry point for whatever we want to do. We add
+#### to context and then return the values to the bot, and configure wit ai to
+#### output the right thing.
+def echo_entities(request):
+    context = request['context']
+    entities = request['entities']
+    #temporary
+    loc = first_entity_value(entities, 'location') 
+
+    # must put try catch statements so that all unacceptable inputs get a
+    # proper reply
+    if loc:
+        context['location'] = loc
+    return context
+
+def send(request, response):
+    send_message(PAT, request['session_id'], response['text'])
+
+actions = {
+    'send': send,
+    'echo_entities': echo_entities,
+}
+
+wit_client = Wit(access_token=os.environ['WIT_TOKEN'], actions=actions)
+# Wit api end
+
 # This needs to be filled with the Page Access Token that will be provided
 # by the Facebook App that will be created.
 PAT = os.environ['FB_APP_TOKEN']
@@ -24,9 +64,12 @@ def handle_verification():
 def handle_messages():
   print "Handling Messages"
   payload = request.get_data()
-  print payload
   for sender, message in messaging_events(payload):
-    wit_client.run_actions(message=message, sender_id=message['sender']['id'])
+    # session_id is just used to send the sender id across
+    try:
+        wit_client.run_actions(message=message, session_id=sender)
+    except Exception as error:
+        print str(error)
   return "ok"
 
 def messaging_events(payload):
@@ -40,7 +83,6 @@ def messaging_events(payload):
       yield event["sender"]["id"], event["message"]["text"].encode('unicode_escape')
     else:
       yield event["sender"]["id"], "I can't echo this"
-
 
 def send_message(token, recipient, text):
   """Send the message text to recipient with id recipient.
@@ -56,26 +98,5 @@ def send_message(token, recipient, text):
   if r.status_code != requests.codes.ok:
     print r.text
 # Facebook bot end
-
-# Wit api start
-def echo_entities(request):
-    context = request['context']
-    entities = request['entities']
-    #temporary
-    loc = first_entity_value(entities, 'location')
-    context['location'] = loc
-    return context
-
-def send(request, response):
-    send_message(PAT, request['sender_id'], response['text'])
-
-actions = {
-    'send': send,
-    'echo_entities': echo_entities,
-}
-
-wit_client = Wit(access_token=os.environ['WIT_TOKEN'], actions=actions)
-# Wit api end
-
 if __name__ == '__main__':
   app.run()
