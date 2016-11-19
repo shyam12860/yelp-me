@@ -74,7 +74,7 @@ actions = {
     'echo_entities': echo_entities,
 }
 
-wit_client = Wit(access=os.environ['WIT_TOKEN'], actions=actions)
+wit_client = Wit(access_token=os.environ['WIT_TOKEN'], actions=actions)
 # Wit api end
 
 if __name__ == '__main__':
