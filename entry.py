@@ -27,7 +27,7 @@ def handle_messages():
   print payload
   for sender, message in messaging_events(payload):
     print message
-    wit_client.run_actions(message=message, sender_id=message['sender']['id'])
+    wit_client.run_actions(message=message, sender_id=sender)
   return "ok"
 
 def messaging_events(payload):
@@ -64,6 +64,8 @@ def echo_entities(request):
     entities = request['entities']
     #temporary
     loc = first_entity_value(entities, 'location')
+    # must put try catch statements so that all unacceptable inputs get a
+    # proper reply
     context['location'] = loc
     return context
 
