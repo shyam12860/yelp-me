@@ -1,6 +1,5 @@
 from flask import Flask, request
 from wit import Wit
-from bottle import Bottle, request, debug
 import json
 import requests
 import os
@@ -25,6 +24,7 @@ def handle_verification():
 def handle_messages():
   print "Handling Messages"
   payload = request.get_data()
+  print payload
   for sender, message in messaging_events(payload):
     wit_client.run_actions(message=message, sender_id=message['sender']['id'])
   return "ok"
