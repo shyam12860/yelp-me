@@ -26,8 +26,8 @@ def handle_messages():
   payload = request.get_data()
   print payload
   for sender, message in messaging_events(payload):
-    print message
-    wit_client.run_actions(message=message, sender_id=sender)
+    # session_id is just used to send the sender id across
+    wit_client.run_actions(message=message, session_id=sender)
   return "ok"
 
 def messaging_events(payload):
@@ -70,7 +70,7 @@ def echo_entities(request):
     return context
 
 def send(request, response):
-    send_message(PAT, request['sender_id'], response['text'])
+    send_message(PAT, request['session_id'], response['text'])
 
 actions = {
     'send': send,
