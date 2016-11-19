@@ -26,6 +26,7 @@ def handle_messages():
   payload = request.get_data()
   print payload
   for sender, message in messaging_events(payload):
+    print message
     wit_client.run_actions(message=message, sender_id=message['sender']['id'])
   return "ok"
 
