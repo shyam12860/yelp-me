@@ -1,4 +1,6 @@
 from flask import Flask, request
+from wit import Wit
+from bottle import Bottle, request, debug
 import json
 import requests
 import os
@@ -8,7 +10,7 @@ app = Flask(__name__)
 # This needs to be filled with the Page Access Token that will be provided
 # by the Facebook App that will be created.
 PAT = os.environ['FB_APP_TOKEN']
-
+# Facebook bot start
 @app.route('/', methods=['GET'])
 def handle_verification():
   print "Handling Verification."
@@ -23,10 +25,8 @@ def handle_verification():
 def handle_messages():
   print "Handling Messages"
   payload = request.get_data()
-  print payload
   for sender, message in messaging_events(payload):
-    print "Incoming from %s: %s" % (sender, message)
-    send_message(PAT, sender, message)
+    wit_client.run_actions(message=message, sender_id=message['sender']['id'])
   return "ok"
 
 def messaging_events(payload):
@@ -55,6 +55,27 @@ def send_message(token, recipient, text):
     headers={'Content-type': 'application/json'})
   if r.status_code != requests.codes.ok:
     print r.text
+# Facebook bot end
+
+# Wit api start
+def echo_entities(request):
+    context = request['context']
+    entities = request['entities']
+    #temporary
+    loc = first_entity_value(entities, 'location')
+    context['location'] = loc
+    return context
+
+def send(request, response):
+    send_message(PAT, request['sender_id'], response['text'])
+
+actions = {
+    'send': send,
+    'echo_entities': echo_entities,
+}
+
+wit_client = Wit(access=os.environ['WIT_TOKEN'], actions=actions)
+# Wit api end
 
 if __name__ == '__main__':
   app.run()
