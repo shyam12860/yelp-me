@@ -28,6 +28,7 @@ def handle_messages():
   for sender, message in messaging_events(payload):
     # session_id is just used to send the sender id across
     wit_client.run_actions(message=message, session_id=sender)
+    break
   return "ok"
 
 def messaging_events(payload):
