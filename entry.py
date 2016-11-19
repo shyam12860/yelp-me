@@ -63,7 +63,7 @@ def echo_entities(request):
     context = request['context']
     entities = request['entities']
     #temporary
-    loc = first_entity_value(entities, 'location')
+    loc = entities['location'][0]['value'] 
     # must put try catch statements so that all unacceptable inputs get a
     # proper reply
     context['location'] = loc
