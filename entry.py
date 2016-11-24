@@ -27,7 +27,6 @@ def handle_messages():
   print payload
   for sender, message in messaging_events(payload):
     # session_id is just used to send the sender id across
-    return "ok"
     wit_client.run_actions(message=message, session_id=sender)
   return "ok"
 
@@ -60,11 +59,24 @@ def send_message(token, recipient, text):
 # Facebook bot end
 
 # Wit api start
+
+def first_entity_value(entities, entity):
+    """
+    Returns first entity value
+    """
+    if entity not in entities:
+        return None
+    val = entities[entity][0]['value']
+    if not val:
+        return None
+    return val['value'] if isinstance(val, dict) else val
+
 def echo_entities(request):
     context = request['context']
     entities = request['entities']
     #temporary
-    loc = entities['location'][0]['value'] 
+    loc = first_entity_value(entities, 'location') 
+
     # must put try catch statements so that all unacceptable inputs get a
     # proper reply
     if loc:
