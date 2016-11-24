@@ -16,12 +16,13 @@ def first_entity_value(entities, entity):
     if entity not in entities:
         return None
     val = entities[entity][0]['value']
+    print val
     if not val:
         return None
     return val['value'] if isinstance(val, dict) else val
 
 def echo_entities(request):
-    print request, test
+    print request
     context = request['context']
     entities = request['entities']
     #temporary
@@ -63,7 +64,6 @@ def handle_verification():
 def handle_messages():
   print "Handling Messages"
   payload = request.get_data()
-  print payload
   for sender, message in messaging_events(payload):
     # session_id is just used to send the sender id across
     try:
