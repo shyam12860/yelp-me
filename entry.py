@@ -21,6 +21,7 @@ def first_entity_value(entities, entity):
     return val['value'] if isinstance(val, dict) else val
 
 def echo_entities(request):
+    print request
     context = request['context']
     entities = request['entities']
     #temporary
