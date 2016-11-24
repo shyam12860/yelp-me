@@ -6,6 +6,44 @@ import os
 
 app = Flask(__name__)
 
+
+# Wit api start
+
+def first_entity_value(entities, entity):
+    """
+    Returns first entity value
+    """
+    if entity not in entities:
+        return None
+    val = entities[entity][0]['value']
+    if not val:
+        return None
+    return val['value'] if isinstance(val, dict) else val
+
+def echo_entities(request):
+    context = request['context']
+    entities = request['entities']
+    #temporary
+    loc = first_entity_value(entities, 'location') 
+
+    # must put try catch statements so that all unacceptable inputs get a
+    # proper reply
+    if loc:
+        context['location'] = loc
+    print context
+    return context
+
+def send(request, response):
+    send_message(PAT, request['session_id'], response['text'])
+
+actions = {
+    'send': send,
+    'echo_entities': echo_entities,
+}
+
+wit_client = Wit(access_token=os.environ['WIT_TOKEN'], actions=actions)
+# Wit api end
+
 # This needs to be filled with the Page Access Token that will be provided
 # by the Facebook App that will be created.
 PAT = os.environ['FB_APP_TOKEN']
@@ -60,43 +98,5 @@ def send_message(token, recipient, text):
   if r.status_code != requests.codes.ok:
     print r.text
 # Facebook bot end
-
-# Wit api start
-
-def first_entity_value(entities, entity):
-    """
-    Returns first entity value
-    """
-    if entity not in entities:
-        return None
-    val = entities[entity][0]['value']
-    if not val:
-        return None
-    return val['value'] if isinstance(val, dict) else val
-
-def echo_entities(request):
-    context = request['context']
-    entities = request['entities']
-    #temporary
-    loc = first_entity_value(entities, 'location') 
-
-    # must put try catch statements so that all unacceptable inputs get a
-    # proper reply
-    if loc:
-        context['location'] = loc
-    print context
-    return context
-
-def send(request, response):
-    send_message(PAT, request['session_id'], response['text'])
-
-actions = {
-    'send': send,
-    'echo_entities': echo_entities,
-}
-
-wit_client = Wit(access_token=os.environ['WIT_TOKEN'], actions=actions)
-# Wit api end
-
 if __name__ == '__main__':
   app.run()
