@@ -20,7 +20,7 @@ def first_entity_value(entities, entity):
         return None
     return val['value'] if isinstance(val, dict) else val
 
-def echo_entities(request, test):
+def echo_entities(request):
     print request, test
     context = request['context']
     entities = request['entities']
@@ -83,7 +83,6 @@ def messaging_events(payload):
       yield event["sender"]["id"], event["message"]["text"].encode('unicode_escape')
     else:
       yield event["sender"]["id"], "I can't echo this"
-
 
 def send_message(token, recipient, text):
   """Send the message text to recipient with id recipient.
