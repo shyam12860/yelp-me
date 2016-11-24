@@ -27,7 +27,10 @@ def handle_messages():
   print payload
   for sender, message in messaging_events(payload):
     # session_id is just used to send the sender id across
-    wit_client.run_actions(message=message, session_id=sender)
+    try:
+        wit_client.run_actions(message=message, session_id=sender)
+    except Exception as error:
+        print str(error)
   return "ok"
 
 def messaging_events(payload):
