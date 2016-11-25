@@ -16,13 +16,14 @@ def first_entity_value(entities, entity):
     if entity not in entities:
         return None
     val = entities[entity][0]['value']
-    print val
     if not val:
         return None
     return val['value'] if isinstance(val, dict) else val
 
+#### This function would be the entry point for whatever we want to do. We add
+#### to context and then return the values to the bot, and configure wit ai to
+#### output the right thing.
 def echo_entities(request):
-    print request
     context = request['context']
     entities = request['entities']
     #temporary
@@ -32,7 +33,6 @@ def echo_entities(request):
     # proper reply
     if loc:
         context['location'] = loc
-    print context
     return context
 
 def send(request, response):
