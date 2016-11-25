@@ -6,7 +6,6 @@ import os
 
 app = Flask(__name__)
 
-
 # Wit api start
 
 def first_entity_value(entities, entity):
