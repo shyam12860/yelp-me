@@ -29,7 +29,7 @@ def suggest(session_id, results):
             data.append(row)
         predictions = tree.predict(data)
         for i in range(1,len(predictions)+1):
-            prediction = predictions[i]
+            prediction = predictions[i-1]
             if prediction==1:
                 print "suggesting", i
                 return i
