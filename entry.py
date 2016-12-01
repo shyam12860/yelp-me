@@ -49,9 +49,9 @@ def echo_entities(request):
         #    element['subtitle'] = ' '.join(r['address'])
         #    element['default_action'] = {'type': 'web_url', 'url': r['url']}
         #    template.append(element)
-        #context['result'] = template
+        context['result'] = '' 
         for key, r in result.items():
-            context['result'] = str(key) + '. ' + r['name'] + 'situated at ' + ' '.join(result[1]['address']) + '\n'
+            context['result'] += str(key) + '. ' + r['name'] + 'situated at ' + ' '.join(result[1]['address']) + '\n'
         #context['name'] = result[1]['name']
         #context['address'] = result[1]['address']
         #context['url'] = result[1]['url']
