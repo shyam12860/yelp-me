@@ -36,7 +36,7 @@ def echo_entities(request):
     print "======================================================="
     result = getResults(query)
     if result:
-        context['result'] = result 
+        context['result'] = result[1]
     return context
 
 def send(request, response):
