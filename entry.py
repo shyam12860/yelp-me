@@ -160,7 +160,7 @@ def handle_messages():
   for sender, message in messaging_events(payload):
     # session_id is just used to send the sender id across
     try:
-        wit_client.run_actions(message=message, session_id=sender, max_steps=10)
+        wit_client.run_actions(message=message, session_id=sender)
     except Exception as error:
         print "///////////////////////"
         print str(error)
