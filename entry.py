@@ -36,10 +36,12 @@ def suggest(session_id, results):
         return 1
 
 def train(session_id, results, feedback):
+    print prev_result
     results = prev_result
     newY = [0,0,0]
     newY[feedback] = 1
     newData = []
+    print "asdjkahsdksjhdad"
     keys = range(1,len(results.keys())+1)
     print results
     for key in keys:
