@@ -104,6 +104,7 @@ def echo_entities(request):
     return context
 
 def train_agent(request):
+    print request
     context = request['context']
     feedback = int(first_entity_value(request['entities'], 'feedback'))
     print feedback, "-----------------", context
