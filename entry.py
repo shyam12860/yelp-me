@@ -14,23 +14,26 @@ app = Flask(__name__)
 
 # Wit api start
 def suggest(session_id, results):
-	if session_id in all_trees:
-		tree = all_trees[session_id]
-		keys = range(1,len(results.keys())+1)
-		data = []
-		for key in keys:
-			num_reviews = results[key]["reviews"]
-			rating = results[key]["rating"]
-			row = [num_reviews,rating]
-			data.append(row)
-		predictions = tree.predict(data)
-		for i in range(1,len(predictions)+1):
-			prediction = predictions[i]
-			if prediction==1:
-				return i
-		return 1
-	else:
-		return 1
+    if session_id in all_trees:
+        tree = all_trees[session_id]
+        keys = range(1,len(results.keys())+1)
+        data = []
+        for key in keys:
+            num_reviews = results[key]["reviews"]
+            rating = results[key]["rating"]
+            row = [num_reviews,rating]
+            data.append(row)
+        predictions = tree.predict(data)
+        for i in range(1,len(predictions)+1):
+            prediction = predictions[i]
+            if prediction==1:
+                print "suggesting", i
+                return i
+        print "-------- suggesting default"
+        return 1
+    else:
+        print "---------- suggesting default"
+        return 1
 
 def train(session_id, results, feedback):
 
