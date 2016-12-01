@@ -67,6 +67,8 @@ def train(session_id, results, feedback):
     clf = tree.DecisionTreeClassifier()
     clf = clf.fit(newData, newY)
     all_trees[session_id] = clf
+    all_y[session_id] = newY
+    all_data[session_id] = newData
 
 def first_entity_value(entities, entity):
     """
