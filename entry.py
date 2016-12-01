@@ -34,16 +34,15 @@ def suggest(session_id, results):
 
 def train(session_id, results, feedback):
 
-	newY = [0,0,0]
-	newY[feedback] = 1
-	newData = []
-	keys = range(1,len(results.keys())+1)
-	for key in keys:
-		num_reviews = results[key]["reviews"]
-		rating = results[key]["rating"]
-		row = [num_reviews,rating]
-		newData.append(row)
-
+    newY = [0,0,0]
+    newY[feedback] = 1
+    newData = []
+    keys = range(1,len(results.keys())+1)
+    for key in keys:
+        num_reviews = results[key]["reviews"]
+        rating = results[key]["rating"]
+        row = [num_reviews,rating]
+        newData.append(row)
     if session_id in all_trees:
         data = all_data[session_id]
         y = all_y[session_id]
