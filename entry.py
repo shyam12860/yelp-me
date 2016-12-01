@@ -36,7 +36,7 @@ def echo_entities(request):
     print query
     # must put try catch statements so that all unacceptable inputs get a
     # proper reply
-    if loc:
+    if query:
         context['location'] = query 
     return context
 
