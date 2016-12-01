@@ -36,7 +36,11 @@ def echo_entities(request):
     print "======================================================="
     result = getResults(query)
     if result:
-        context['result'] = result[1]
+        context['result'] = result[1]['name'] + 'situated at' + result[1]['address']
+        context['result'] = context['result'] + '. Here\'s the url: ' + result[1]['url'] if result[1]['url'] else context['result']
+        #context['name'] = result[1]['name']
+        #context['address'] = result[1]['address']
+        #context['url'] = result[1]['url']
     return context
 
 def send(request, response):
