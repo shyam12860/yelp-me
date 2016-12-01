@@ -52,7 +52,7 @@ def train(session_id, results, feedback):
         y = all_y[session_id]
         newData = newData + data
         newY = newY + y
-    print newData, newY
+    print "----", newData, newY
     clf = tree.DecisionTreeClassifier()
     clf = clf.fit(newData, newY)
     all_trees[session_id] = clf
