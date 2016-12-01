@@ -44,15 +44,15 @@ def train(session_id, results, feedback):
 		row = [num_reviews,rating]
 		newData.append(row)
 
-	if session_id in all_trees:
-		data = all_data[session_id]
-		y = all_y[session_id]
-		newData = newData + data
-		newY = newY + y
-
-	clf = tree.DecisionTreeClassifier()
-	clf = clf.fit(newData, newY)
-	all_trees[session_id] = clf
+    if session_id in all_trees:
+        data = all_data[session_id]
+        y = all_y[session_id]
+        newData = newData + data
+        newY = newY + y
+    print newData, newY
+    clf = tree.DecisionTreeClassifier()
+    clf = clf.fit(newData, newY)
+    all_trees[session_id] = clf
 
 def first_entity_value(entities, entity):
     """
