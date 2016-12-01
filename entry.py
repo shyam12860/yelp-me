@@ -111,7 +111,7 @@ def train_agent(request):
     context = request['context']
     feedback = int(first_entity_value(request['entities'], 'feedback'))
     print feedback, "-----------------", context
-    train(request['session_id'], context['original'], feedback)
+    train(request['session_id'], '',feedback)
 
 def send(request, response):
     send_message(PAT, request['session_id'], response['text'])
