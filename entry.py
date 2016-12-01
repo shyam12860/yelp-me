@@ -57,6 +57,7 @@ def train(session_id, results, feedback):
         rating = results[key]["rating"]
         row = [num_reviews,rating]
         newData.append(row)
+    print keys
     if session_id in all_trees:
         data = all_data[session_id]
         y = all_y[session_id]
@@ -158,6 +159,7 @@ def handle_messages():
     try:
         wit_client.run_actions(message=message, session_id=sender)
     except Exception as error:
+        print "///////////////////////"
         print str(error)
   return "ok"
 
