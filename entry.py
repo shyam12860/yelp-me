@@ -8,7 +8,11 @@ import os
 app = Flask(__name__)
 
 # Wit api start
+def suggest(results):
+    return 1
 
+def train(feedback):
+    print 0
 def first_entity_value(entities, entity):
     """
     Returns first entity value
@@ -35,10 +39,10 @@ def echo_entities(request):
     query['cost'] = first_entity_value(entities, 'cost')
     print "======================================================="
     result = getResults(query)
-    print result
+    print request['session_id']
     if result:
-        context['result'] = result[1]['name'] + 'situated at' + ' '.join(result[1]['address'])
-        context['result'] = context['result'] + '. Here\'s the url: ' + result[1]['url'] if result[1]['url'] else context['result']
+        context['result'] = ' ' + result[1]['name'] + 'situated at ' + ' '.join(result[1]['address'])
+        context['result'] = context['result'] + '. \n Here\'s the url: ' + result[1]['url'] if result[1]['url'] else context['result']
         #context['name'] = result[1]['name']
         #context['address'] = result[1]['address']
         #context['url'] = result[1]['url']
