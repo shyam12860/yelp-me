@@ -95,8 +95,15 @@ def echo_entities(request):
             context['result'] += str(key) + '. ' + r['name'] + 'situated at ' + ' '.join(result[1]['address']) + '\n'
         #context['name'] = result[1]['name']
         #context['address'] = result[1]['address']
-        #context['url'] = result[1]['url']
+        #templatecontext['url'] = result[1]['url']
+    context['original'] = result
+    context['suggest'] = suggest(request['session_id'], result)
     return context
+
+def train_agent(request):
+    context = request['context']
+    feedback = int(first_entity_value(request['entities'], 'feedback'))
+    train(request['session_id'], context['original'], )
 
 def send(request, response):
     send_message(PAT, request['session_id'], response['text'])
@@ -104,6 +111,7 @@ def send(request, response):
 actions = {
     'send': send,
     'echo_entities': echo_entities,
+    'train': train_agent
 }
 
 wit_client = Wit(access_token=os.environ['WIT_TOKEN'], actions=actions)
