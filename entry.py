@@ -42,6 +42,14 @@ def echo_entities(request):
     print request['session_id']
     print result
     if result:
+        template = []
+        for r in result:
+            element = {}
+            element['title'] = r['name']
+            element['subtitle'] = ' '.join(r['address'])
+            element['default_action'] = {'type': 'web_url', 'url': r['url']}
+            template.append(element)
+        #context['result'] = template
         context['result'] = ' ' + result[1]['name'] + 'situated at ' + ' '.join(result[1]['address'])
         context['result'] = context['result'] + '. \n Here\'s the url: ' + result[1]['url'] if result[1]['url'] else context['result']
         #context['name'] = result[1]['name']
@@ -50,6 +58,8 @@ def echo_entities(request):
     return context
 
 def send(request, response):
+    if request['context']['result']:
+        print request, response
     send_message(PAT, request['session_id'], response['text'])
 
 actions = {
