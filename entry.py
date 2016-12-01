@@ -83,8 +83,16 @@ def echo_entities(request):
     print request['session_id']
     print result
     if result:
-        context['result'] = ' ' + result[1]['name'] + 'situated at ' + ' '.join(result[1]['address'])
-        context['result'] = context['result'] + '. \n Here\'s the url: ' + result[1]['url'] if result[1]['url'] else context['result']
+        #template = []
+        #for key, r in result.items():
+        #    element = {}
+        #    element['title'] = r['name']
+        #    element['subtitle'] = ' '.join(r['address'])
+        #    element['default_action'] = {'type': 'web_url', 'url': r['url']}
+        #    template.append(element)
+        context['result'] = '' 
+        for key, r in result.items():
+            context['result'] += str(key) + '. ' + r['name'] + 'situated at ' + ' '.join(result[1]['address']) + '\n'
         #context['name'] = result[1]['name']
         #context['address'] = result[1]['address']
         #context['url'] = result[1]['url']
