@@ -4,15 +4,56 @@ from yelpScript import getResults
 import json
 import requests
 import os
+from sklearn import tree
+
+all_trees = {}
+all_data = {}
+all_y = {}
 
 app = Flask(__name__)
 
 # Wit api start
-def suggest(results):
-    return 1
+def suggest(session_id, results):
+	if session_id in all_trees:
+		tree = all_trees[session_id]
+		keys = range(1,len(results.keys())+1)
+		data = []
+		for key in keys:
+			num_reviews = results[key]["reviews"]
+			rating = results[key]["rating"]
+			row = [num_reviews,rating]
+			data.append(row)
+		predictions = tree.predict(data)
+		for i in range(1,len(predictions)+1):
+			prediction = predictions[i]
+			if prediction==1:
+				return i
+		return 1
+	else:
+		return 1
 
-def train(feedback):
-    print 0
+def train(session_id, results, feedback):
+
+	newY = [0,0,0]
+	newY[feedback] = 1
+	newData = []
+	keys = range(1,len(results.keys())+1)
+	for key in keys:
+		num_reviews = results[key]["reviews"]
+		rating = results[key]["rating"]
+		row = [num_reviews,rating]
+		newData.append(row)
+
+	if session_id in all_trees:
+		data = all_data[session_id]
+		y = all_y[session_id]
+		newData = newData + data
+		newY = newY + y
+
+	clf = tree.DecisionTreeClassifier()
+	clf = clf.fit(newData, newY)
+	all_trees[session_id] = clf
+
 def first_entity_value(entities, entity):
     """
     Returns first entity value
