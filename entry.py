@@ -26,8 +26,14 @@ def echo_entities(request):
     context = request['context']
     entities = request['entities']
     #temporary
-    loc = first_entity_value(entities, 'location') 
-
+    query = {}
+    query['location'] = first_entity_value(entities, 'location') 
+    query['datetime'] = first_entity_value(entities, 'datetime')
+    query['cuisine'] = first_entity_value(entities, 'cuisine')
+    query['rating'] = first_entity_value(entities, 'rating')
+    query['cost'] = first_entity_value(entities, 'cost')
+    print "======================================================="
+    print query
     # must put try catch statements so that all unacceptable inputs get a
     # proper reply
     if loc:
