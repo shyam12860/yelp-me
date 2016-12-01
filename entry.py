@@ -105,7 +105,8 @@ def echo_entities(request):
 def train_agent(request):
     context = request['context']
     feedback = int(first_entity_value(request['entities'], 'feedback'))
-    train(request['session_id'], context['original'], )
+    print feedback, "-----------------"
+    train(request['session_id'], context['original'], feedback)
 
 def send(request, response):
     send_message(PAT, request['session_id'], response['text'])
