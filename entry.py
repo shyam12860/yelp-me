@@ -34,8 +34,6 @@ def echo_entities(request):
     query['cost'] = first_entity_value(entities, 'cost')
     print "======================================================="
     print query
-    # must put try catch statements so that all unacceptable inputs get a
-    # proper reply
     if query:
         context['location'] = query 
     return context
