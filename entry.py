@@ -1,5 +1,6 @@
 from flask import Flask, request
 from wit import Wit
+from yelpScript import getResults
 import json
 import requests
 import os
@@ -33,9 +34,9 @@ def echo_entities(request):
     query['rating'] = first_entity_value(entities, 'rating')
     query['cost'] = first_entity_value(entities, 'cost')
     print "======================================================="
-    print query
-    if query:
-        context['location'] = query 
+    result = getResults(query)
+    if result:
+        context['result'] = result 
     return context
 
 def send(request, response):
