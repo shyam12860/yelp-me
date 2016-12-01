@@ -41,6 +41,7 @@ def train(session_id, results, feedback):
     newY[feedback] = 1
     newData = []
     keys = range(1,len(results.keys())+1)
+    print results
     for key in keys:
         num_reviews = results[key]["reviews"]
         rating = results[key]["rating"]
