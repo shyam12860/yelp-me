@@ -30,13 +30,14 @@ def suggest(session_id, results):
         predictions = tree.predict(data)
         for i in range(1,len(predictions)+1):
             prediction = predictions[i-1]
+            print prediction
             if prediction==1:
                 print "suggesting", i
                 return i
         print "-------- suggesting default"
         return 1
     else:
-        print "---------- suggesting default"
+        print "---------- 1 suggesting default"
         return 1
 
 def train(session_id, results, feedback):
