@@ -22,9 +22,17 @@ def getResults(entityDict):
 	LOCATION = entityDict['location']
 	CUISINE = entityDict['cuisine']
 	COST = entityDict['cost']
-	RATING = float(entityDict['rating'])
+	RATING = entityDict['rating']
 	DATETIME = entityDict['datetime']
-	HOUR = DATETIME.split('T')[1][0:2]
+
+	if(DATETIME):
+		HOUR = DATETIME.split('T')[1][0:2]
+	else:
+		HOUR=""
+
+	CUISINE = CUISINE if CUISINE else ""
+	COST = COST if COST else ""
+	RATING = float(RATING) if RATING else 0.0
 
 	params = {
 	    'term': COST + ' ' + CUISINE + ' ' + 'restaurants' + ' which remain open at '+ HOUR,
@@ -33,7 +41,7 @@ def getResults(entityDict):
 	}
 
 	if(LOCATION==None):
-		return None
+		return {}
 
 	response = client.search(LOCATION, **params)
 	d = {}
@@ -47,4 +55,3 @@ def getResults(entityDict):
 			count+=1
 	
 	return d
-	
