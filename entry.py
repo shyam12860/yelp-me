@@ -43,7 +43,7 @@ def echo_entities(request):
     print result
     if result:
         template = []
-        for r in result:
+        for key, r in result.items():
             element = {}
             element['title'] = r['name']
             element['subtitle'] = ' '.join(r['address'])
