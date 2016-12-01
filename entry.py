@@ -5,7 +5,7 @@ import json
 import requests
 import os
 from sklearn import tree
-
+prev_result = {}
 all_trees = {}
 all_data = {}
 all_y = {}
@@ -36,7 +36,7 @@ def suggest(session_id, results):
         return 1
 
 def train(session_id, results, feedback):
-
+    results = prev_result
     newY = [0,0,0]
     newY[feedback] = 1
     newData = []
@@ -100,6 +100,7 @@ def echo_entities(request):
         #context['address'] = result[1]['address']
         #templatecontext['url'] = result[1]['url']
     context['original'] = result
+    prev_result = result
     context['suggest'] = suggest(request['session_id'], result)
     return context
 
