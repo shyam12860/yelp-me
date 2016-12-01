@@ -36,6 +36,7 @@ def suggest(session_id, results):
         return 1
 
 def train(session_id, results, feedback):
+    global prev_result
     print prev_result
     results = prev_result
     newY = [0,0,0]
@@ -74,6 +75,7 @@ def first_entity_value(entities, entity):
 #### to context and then return the values to the bot, and configure wit ai to
 #### output the right thing.
 def echo_entities(request):
+    global prev_result
     context = request['context']
     entities = request['entities']
     #temporary
