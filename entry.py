@@ -105,6 +105,7 @@ def echo_entities(request):
         #templatecontext['url'] = result[1]['url']
     context['original'] = result
     prev_result = result
+    print prev_result, result, "----------------------------------"
     context['suggest'] = suggest(request['session_id'], result)
     return context
 
