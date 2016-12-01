@@ -40,6 +40,7 @@ def echo_entities(request):
     print "======================================================="
     result = getResults(query)
     print request['session_id']
+    print result
     if result:
         context['result'] = ' ' + result[1]['name'] + 'situated at ' + ' '.join(result[1]['address'])
         context['result'] = context['result'] + '. \n Here\'s the url: ' + result[1]['url'] if result[1]['url'] else context['result']
