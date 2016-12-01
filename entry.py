@@ -14,6 +14,10 @@ app = Flask(__name__)
 
 # Wit api start
 def suggest(session_id, results):
+    global all_trees
+    global all_data
+    global all_y
+
     if session_id in all_trees:
         tree = all_trees[session_id]
         keys = range(1,len(results.keys())+1)
@@ -37,6 +41,9 @@ def suggest(session_id, results):
 
 def train(session_id, results, feedback):
     global prev_result
+    global all_trees
+    global all_data
+    global all_y
     print prev_result
     results = prev_result
     newY = [0,0,0]
