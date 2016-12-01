@@ -40,7 +40,7 @@ def train(session_id, results, feedback):
     print prev_result
     results = prev_result
     newY = [0,0,0]
-    newY[feedback] = 1
+    newY[feedback-1] = 1
     newData = []
     print "asdjkahsdksjhdad"
     keys = range(1,len(results.keys())+1)
