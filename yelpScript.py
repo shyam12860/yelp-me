@@ -37,7 +37,7 @@ def getResults(entityDict):
 	params = {
 	    'term': COST + ' ' + CUISINE + ' ' + 'restaurants' + ' which remain open at '+ HOUR,
 	    'sort': "0",
-	    'limit': '20'
+	    'limit': '3'
 	}
 
 	if(LOCATION==None):
@@ -52,6 +52,8 @@ def getResults(entityDict):
 			d[count]["name"] = response.businesses[i].name
 			d[count]["url"] = response.businesses[i].url
 			d[count]["address"] = response.businesses[i].location.address
+			d[count]["rating"] = response.businesses[i].rating
+			d[count]["reviews"] = response.businesses[i].review_count
 			count+=1
 	
 	return d
